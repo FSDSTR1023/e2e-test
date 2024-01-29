@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AccordionMulti } from "./components/AccordionMulti/AccordionMulti";
+import AccordionMulti from "./components/AccordionMulti";
 import { Button } from "./components/Button/Button";
 
 const dataList = [
@@ -22,13 +22,23 @@ const dataList = [
 
 function App() {
   const [openAll, setOpenAll] = useState(false);
+  const param = new URLSearchParams(window.location.search);
+  const name = param.get("name");
+  console.log(name);
 
-  return (
+  return name !== null ? (
+    <h1>Hola {name}</h1>
+  ) : (
     <div>
       <AccordionMulti dataList={dataList} openAll={openAll} />
       <Button onClick={() => setOpenAll(!openAll)}>{`${
         openAll ? "Close" : "Open"
       } all`}</Button>
+      <form data-cy="form-login">
+        <input id="name" name="name" type="text" placeholder="name" />
+        <input type="password" name="password" placeholder="password" />
+        <button type="submit">Enviar</button>
+      </form>
     </div>
   );
 }
